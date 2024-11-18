@@ -101,9 +101,7 @@ namespace c_project_mastermind_1
         }
         private void CheckCodeButton_Click(object sender, RoutedEventArgs e)
         {
-            attempts++;
-            Title = $"MasterMind - poging {attempts}";
-            StartCountdown();
+            StopCountdown(CheckCodeButton, e);
             List<string> userColors = new List<string>();
             userColors.Add(comboBoxOne.SelectedItem?.ToString());
             userColors.Add(comboBoxTwo.SelectedItem?.ToString());
@@ -154,13 +152,17 @@ namespace c_project_mastermind_1
         }
         private void StartCountdown()
         {
-            timer.Tick += Timer_Tick;
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Stop();
+            timer.Tick += StopCountdown;
+            timer.Interval = new TimeSpan(0, 0, 10);
             timer.Start();
         }
-        private void Timer_Tick(object sender, EventArgs e)
+        private void StopCountdown(object sender, EventArgs e)
         {
-            
+            timer.Stop();
+            attempts++;
+            Title = $"MasterMind - poging {attempts}";
+            timer.Start();
         }
     }
 }
