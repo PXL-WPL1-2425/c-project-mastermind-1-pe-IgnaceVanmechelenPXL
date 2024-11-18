@@ -19,11 +19,13 @@ namespace c_project_mastermind_1
     {
         private int randomIndex;
         private string randomColor;
+        int attempts;
         string[] colors = { "Red", "Yellow", "Orange", "White", "Green", "Blue" };
         List<string> secretCode = new List<string>();
         public MainWindow()
         {
             InitializeComponent();
+            Title = $"MasterMind - poging {attempts}";
             string randomColorOne = GenerateRandomColor();
             string randomColorTwo = GenerateRandomColor();
             string randomColorThree = GenerateRandomColor();
@@ -33,8 +35,6 @@ namespace c_project_mastermind_1
             secretCode.Add(randomColorTwo);
             secretCode.Add(randomColorThree);
             secretCode.Add(randomColorFour);
-
-            Title = "MasterMind - " + string.Join(", ", secretCode);
 
             foreach (string color in colors)
             {
@@ -95,6 +95,8 @@ namespace c_project_mastermind_1
         }
         private void CheckCodeButton_Click(object sender, RoutedEventArgs e)
         {
+            attempts++;
+            Title = $"MasterMind - poging {attempts}";
             List<string> userColors = new List<string>();
             userColors.Add(comboBoxOne.SelectedItem?.ToString());
             userColors.Add(comboBoxTwo.SelectedItem?.ToString());
