@@ -143,6 +143,8 @@ namespace c_project_mastermind_1
                     break;
             }
         }
+        // de ToggleDebug maakt de secretcodetextbox zichtbaar bij het indrukken van de control- en f12-toetsen
+        // met deze code gebeurt dit echter niet wanneer ik deze toetsen gebruik (ik vermoed mogelijks door de 'fn'-toets maar vind hier momenteel geen oplossing voor.
         private void ToggleDebug(object sender, KeyEventArgs e)
         {
             if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.F12)
@@ -150,13 +152,16 @@ namespace c_project_mastermind_1
                 secretCodeTextBox.Visibility = Visibility.Visible;
             }
         }
+        // De StartCountdown activeert stopCountdown na het verstrijken van 10 seconden
+        // Eerst wordt gedefinieerd welke method gebruikt gaat worden en na welke interval, daarna wordt de timer geactiveerd
         private void StartCountdown()
         {
-            timer.Stop();
             timer.Tick += StopCountdown;
             timer.Interval = new TimeSpan(0, 0, 10);
             timer.Start();
         }
+        // De StopCountdown stopt de lopende timer, verhoogt de pogingen met 1 en updatetet dit ook in de titel, vervolgens start het de volgende timer op.
+        // Aangezien deze functie wordt opgeroepen wanneer er op de checkbutton wordt geklikt of wanneer er 10 seconden zijn verstreken is dit de enige plaats waar het aantal pogingen en de titel worden aangepast na hun definiëring bij het opstarten van het window.
         private void StopCountdown(object sender, EventArgs e)
         {
             timer.Stop();
