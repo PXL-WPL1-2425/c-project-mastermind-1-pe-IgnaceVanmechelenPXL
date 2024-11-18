@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace c_project_mastermind_1
 {
@@ -23,6 +24,7 @@ namespace c_project_mastermind_1
         int attempts;
         string[] colors = { "Red", "Yellow", "Orange", "White", "Green", "Blue" };
         List<string> secretCode = new List<string>();
+        private DispatcherTimer timer = new DispatcherTimer();
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +48,7 @@ namespace c_project_mastermind_1
                 comboBoxThree.Items.Add(color);
                 comboBoxFour.Items.Add(color);
             }
+            StartCountdown();
         }
         public string GenerateRandomColor()
         {
@@ -100,6 +103,7 @@ namespace c_project_mastermind_1
         {
             attempts++;
             Title = $"MasterMind - poging {attempts}";
+            StartCountdown();
             List<string> userColors = new List<string>();
             userColors.Add(comboBoxOne.SelectedItem?.ToString());
             userColors.Add(comboBoxTwo.SelectedItem?.ToString());
@@ -143,11 +147,20 @@ namespace c_project_mastermind_1
         }
         private void ToggleDebug(object sender, KeyEventArgs e)
         {
-            if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.F12 )
+            if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.F12)
             {
-                Debugger.Launch();
                 secretCodeTextBox.Visibility = Visibility.Visible;
             }
+        }
+        private void StartCountdown()
+        {
+            timer.Tick += Timer_Tick;
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Start();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            
         }
     }
 }
