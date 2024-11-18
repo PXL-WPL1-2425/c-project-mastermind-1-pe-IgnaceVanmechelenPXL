@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System.Diagnostics;
+using System.Reflection.Emit;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,6 +36,8 @@ namespace c_project_mastermind_1
             secretCode.Add(randomColorTwo);
             secretCode.Add(randomColorThree);
             secretCode.Add(randomColorFour);
+
+            secretCodeTextBox.Text = string.Join(", ", secretCode);
 
             foreach (string color in colors)
             {
@@ -136,6 +139,14 @@ namespace c_project_mastermind_1
                     labelFour.BorderBrush = brush;
                     labelFour.BorderThickness = new Thickness(3);
                     break;
+            }
+        }
+        private void ToggleDebug(object sender, KeyEventArgs e)
+        {
+            if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.F12 )
+            {
+                Debugger.Launch();
+                secretCodeTextBox.Visibility = Visibility.Visible;
             }
         }
     }
